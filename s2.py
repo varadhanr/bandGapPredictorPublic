@@ -7,7 +7,7 @@ trainFile = open("bandgapDFT.csv", "r").readlines()
 
 
 def naiveVectorize(composition):
-    vector = zeros((MAX_Z))
+    vector = zeros((MAX_Z))  # creates a vector of 100 dummy elements
     for element in composition:
         fraction = composition.get_atomic_fraction(element)
         vector[element.Z - 1] = fraction
@@ -21,8 +21,8 @@ naiveFeatures = []
 MAX_Z = 100  # maximum length of vector to hold naive feature set
 
 for line in trainFile:
-    split = str.split(line, ',')
-    material = Composition(split[0])
+    split = str.split(line, ',')  # "H2O,1.134" => ["H2O", "1.123"]
+    material = Composition(split[0])  # H2, O1
     materials.append(material)  # store chemical formulas
     # create features from chemical formula
     naiveFeatures.append(naiveVectorize(material))
