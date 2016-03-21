@@ -98,6 +98,8 @@ for i in b:
     key.append(i[0])
     val.append(i[1]) 
 #plt.plot(atmno, bandgaps)
+plt.xlabel('Molecular weight')
+plt.ylabel('Band Gap')
 plt.plot(val,key,'ro')
 plt.show()
 
