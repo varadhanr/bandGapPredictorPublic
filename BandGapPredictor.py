@@ -90,7 +90,7 @@ for material in materials:
 linear = linear_model.Ridge(alpha=0.5)
 
 
-plt.plot(atmno, bandgapsp)
+plt.plot(atmno, bandgaps)
 plt.show()
 
 cv = cross_validation.ShuffleSplit(len(bandgaps),
