@@ -96,12 +96,12 @@ linear = linear_model.Ridge(alpha=0.5)
 plt.plot(plotter3.values(), plotter3.keys(), 'b*')
 plt.xlabel('Atomic Fraction')
 plt.ylabel('Band Gap')
-# plt.show()
+plt.show()
 
 plt.plot(plotter2.values(), plotter2.keys(), 'bo')
 plt.xlabel('Electro negativity difference')
 plt.ylabel('Band Gap')
-# plt.show()
+plt.show()
 
 
 b = sorted(plotter.iteritems(), key=lambda (x, y): float(x))
@@ -115,7 +115,7 @@ for i in b:
 plt.xlabel('Molecular weight')
 plt.ylabel('Band Gap')
 plt.plot(val, key, 'ro')
-# plt.show()
+plt.show()
 
 cv = cross_validation.ShuffleSplit(len(bandgaps),
                                    n_iter=10, test_size=0.1, random_state=0)
