@@ -21,13 +21,12 @@ MAX_Z = 100
 
 for line in trainFile:
     split = str.split(line, ',')
+    if(float(split[1]) == 0):
+        x = 1
     material = Composition(split[0])
     materials.append(material)
     naiveFeatures.append(naiveVectorize(material))
     bandgaps.append(float(split[1]))
-
-# plt.plot(bandgaps)
-# plt.show()
 
 baselineError = mean(abs(mean(bandgaps) - bandgaps))
 print("The MAE of always guessing the average band gap is: " +
@@ -53,6 +52,8 @@ physicalFeatures = []
 
 atmno = []
 plotter = {}
+plotter2 = {}
+plotter3 = {}
 it = 0
 
 for material in materials:
@@ -79,29 +80,42 @@ for material in materials:
     theseFeatures.append(eneg[0] - eneg[1])
     theseFeatures.append(group[0])
     theseFeatures.append(group[1])
+    theseFeatures.append(atomicNo[0] + atomicNo[1])
     physicalFeatures.append(theseFeatures)
     ZZ = 0
     for z in atomicNo:
         ZZ += z
     atmno.append(ZZ)
     plotter[bandgaps[it]] = ZZ
+    plotter2[bandgaps[it]] = eneg[0] - eneg[1]
+    plotter3[bandgaps[it]] = fraction[0] / fraction[1]
     it += 1
 
 linear = linear_model.Ridge(alpha=0.5)
 
-#print plotter
-b=sorted(plotter.iteritems(),key=lambda (x,y):float(x))
-#print b
-key=[]
-val=[]
+plt.plot(plotter3.values(), plotter3.keys(), 'b*')
+plt.xlabel('Atomic Fraction')
+plt.ylabel('Band Gap')
+# plt.show()
+
+plt.plot(plotter2.values(), plotter2.keys(), 'bo')
+plt.xlabel('Electro negativity difference')
+plt.ylabel('Band Gap')
+# plt.show()
+
+
+b = sorted(plotter.iteritems(), key=lambda (x, y): float(x))
+
+key = []
+val = []
 for i in b:
     key.append(i[0])
-    val.append(i[1]) 
-#plt.plot(atmno, bandgaps)
+    val.append(i[1])
+
 plt.xlabel('Molecular weight')
 plt.ylabel('Band Gap')
-plt.plot(val,key,'ro')
-plt.show()
+plt.plot(val, key, 'ro')
+# plt.show()
 
 cv = cross_validation.ShuffleSplit(len(bandgaps),
                                    n_iter=10, test_size=0.1, random_state=0)
