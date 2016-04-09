@@ -156,7 +156,7 @@ print("The MAE of random forrest using physicalFeatures feature set is: " +
 
 ##########################SVM SVM SVM #######################################
 
-
+#training set size:3000 test set size:1096
 import bucket
 from sklearn.metrics import accuracy_score
 train_X=physicalFeatures[0:3000]
