@@ -2,6 +2,8 @@ from pymatgen import *
 from numpy import zeros, mean
 from sklearn import *
 import matplotlib.pyplot as plt
+import bucket
+from sklearn.metrics import accuracy_score
 
 trainFile = open("bandgapDFT.csv", "r").readlines()
 
@@ -93,27 +95,32 @@ for material in materials:
 
 linear = linear_model.Ridge(alpha=0.5)
 
-c=sorted(plotter3.iteritems(),key=lambda (x,y): float(x))
-key1=[]
-val1=[]
+f, (ax1, ax2, ax3) = plt.subplots(3)
+
+c = sorted(plotter3.iteritems(), key=lambda (x, y): float(x))
+key1 = []
+val1 = []
 for j in c:
     key1.append(j[0])
     val1.append(j[1])
-plt.plot(val1, key1)
-plt.xlabel('Atomic Fraction')
-plt.ylabel('Band Gap')
-plt.show()
+ax1.plot(val1, key1, 'g.')
+ax1.set_title('Atomic fraction, Electro negativity difference, ' +
+              ' Molecular Weight')
 
-d=sorted(plotter2.iteritems(),key=lambda (x,y):float(x))
-key2=[]
-val2=[]
+# ax1.xlabel('Atomic Fraction')
+# ax1.ylabel('Band Gap')
+
+
+d = sorted(plotter2.iteritems(), key=lambda (x, y): float(x))
+key2 = []
+val2 = []
 for k in d:
     key2.append(k[0])
     val2.append(k[1])
-plt.plot(val2,key2)
-plt.xlabel('Electro negativity difference')
-plt.ylabel('Band Gap')
-plt.show()
+ax2.plot(val2, key2, 'b.')
+
+# ax2.xlabel('Electro negativity difference')
+# ax2.ylabel('Band Gap')
 
 
 b = sorted(plotter.iteritems(), key=lambda (x, y): float(x))
@@ -124,9 +131,13 @@ for i in b:
     key.append(i[0])
     val.append(i[1])
 
-plt.xlabel('Molecular weight')
-plt.ylabel('Band Gap')
-plt.plot(val, key)
+# ax3.xlabel('Molecular weight')
+# ax3.ylabel('Band Gap')
+ax3.plot(val, key, "r.")
+
+f.text(0.06, 0.5, 'Band Gap', ha='center',
+       va='center', rotation='vertical')
+
 plt.show()
 
 cv = cross_validation.ShuffleSplit(len(bandgaps),
@@ -154,18 +165,16 @@ print("The MAE of random forrest using physicalFeatures feature set is: " +
       str(round(abs(mean(scores)), 3)) + " eV")
 
 
-##########################SVM SVM SVM #######################################
+# Using SVM to classify
+# training set size:3000 test set size:1096
 
-#training set size:3000 test set size:1096
-import bucket
-from sklearn.metrics import accuracy_score
-train_X=physicalFeatures[0:3000]
-convertedBandgap=bucket.create_bucket(bandgaps)
-train_Y=convertedBandgap[0:3000]
-test_X=physicalFeatures[3000:4096]
-test_Y=convertedBandgap[3000:4096]
-clf=svm.SVC()
-clf.fit(train_X,train_Y)
-predict=clf.predict(test_X)
-print ("Accuracy using svm.SVC() is :"+str(accuracy_score(test_Y,predict)))
-
+train_X = physicalFeatures[0:3000]
+convertedBandgap = bucket.create_bucket(bandgaps)
+train_Y = convertedBandgap[0:3000]
+test_X = physicalFeatures[3000:4096]
+test_Y = convertedBandgap[3000:4096]
+clf = svm.SVC()
+clf.fit(train_X, train_Y)
+predict = clf.predict(test_X)
+print ("Accuracy using svm.SVC() is : " +
+       str(accuracy_score(test_Y, predict) * 100) + "%")
