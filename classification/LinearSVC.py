@@ -165,7 +165,7 @@ print("The MAE of random forrest using physicalFeatures feature set is: " +
       str(round(abs(mean(scores)), 3)) + " eV")
 
 
-# Using SVM to classify
+# Using LinearSVC to classify
 # training set size:3000 test set size:1096
 
 train_X = physicalFeatures[0:3000]
@@ -176,6 +176,6 @@ test_Y = convertedBandgap[3000:4096]
 clf = svm.LinearSVC()
 clf.fit(train_X, train_Y)
 predict = clf.predict(test_X)
-print ("Accuracy using svm.SVC() is : " +
+print ("Accuracy using svm.LinearSVC() is : " +
        str(accuracy_score(test_Y, predict) * 100) + "%")
 print ("Number of correct predictions:"+str(accuracy_score(test_Y,predict,normalize=False)))
