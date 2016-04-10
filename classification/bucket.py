@@ -12,5 +12,5 @@ def create_bucket(a):
         for j in bucket_list_new:
             if(j[0] >= i):
                 new_bucket.append(j[1])
-                break
+        break
     return new_bucket
