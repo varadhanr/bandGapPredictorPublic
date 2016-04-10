@@ -165,17 +165,18 @@ print("The MAE of random forrest using physicalFeatures feature set is: " +
       str(round(abs(mean(scores)), 3)) + " eV")
 
 
-# Using Random Forest to classify
+# Using Decision Tree to classify
 # training set size:3000 test set size:1096
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
 train_X = physicalFeatures[0:3000]
 convertedBandgap = bucket.create_bucket(bandgaps)
 train_Y = convertedBandgap[0:3000]
 test_X = physicalFeatures[3000:4096]
 test_Y = convertedBandgap[3000:4096]
-clf = RandomForestClassifier(n_estimators=50)
+clf = DecisionTreeClassifier()
 clf.fit(train_X, train_Y)
 predict = clf.predict(test_X)
-print ("Accuracy using Random Forest is : " +
+print ("Accuracy using Decision Tree Classifier is : " +
        str(accuracy_score(test_Y, predict) * 100) + "%")
 print ("Number of correct predictions:"+str(accuracy_score(test_Y,predict,normalize=False)))
