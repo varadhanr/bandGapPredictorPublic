@@ -24,7 +24,8 @@ MAX_Z = 100
 for line in trainFile:
     split = str.split(line, ',')
     if(float(split[1]) == 0):
-        x = 1
+        
+	x=1
     material = Composition(split[0])
     materials.append(material)
     naiveFeatures.append(naiveVectorize(material))

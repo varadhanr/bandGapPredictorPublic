@@ -24,7 +24,7 @@ MAX_Z = 100
 for line in trainFile:
     split = str.split(line, ',')
     if(float(split[1]) == 0):
-        x = 1
+        x=1
     material = Composition(split[0])
     materials.append(material)
     naiveFeatures.append(naiveVectorize(material))
@@ -171,8 +171,8 @@ from sklearn.ensemble import RandomForestClassifier
 train_X = physicalFeatures[0:3000]
 convertedBandgap = bucket.create_bucket(bandgaps)
 train_Y = convertedBandgap[0:3000]
-test_X = physicalFeatures[3000:4096]
-test_Y = convertedBandgap[3000:4096]
+test_X = physicalFeatures[3000:]
+test_Y = convertedBandgap[3000:]
 clf = RandomForestClassifier(n_estimators=50)
 clf.fit(train_X, train_Y)
 predict = clf.predict(test_X)
