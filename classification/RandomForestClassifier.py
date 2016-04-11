@@ -24,7 +24,7 @@ MAX_Z = 100
 for line in trainFile:
     split = str.split(line, ',')
     if(float(split[1]) == 0):
-        x=1
+        x = 1
     material = Composition(split[0])
     materials.append(material)
     naiveFeatures.append(naiveVectorize(material))
@@ -178,4 +178,5 @@ clf.fit(train_X, train_Y)
 predict = clf.predict(test_X)
 print ("Accuracy using Random Forest is : " +
        str(accuracy_score(test_Y, predict) * 100) + "%")
-print ("Number of correct predictions:"+str(accuracy_score(test_Y,predict,normalize=False)))
+print ("Number of correct predictions:" +
+       str(accuracy_score(test_Y, predict, normalize=False)))

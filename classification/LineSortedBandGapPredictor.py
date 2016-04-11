@@ -93,9 +93,9 @@ for material in materials:
 
 linear = linear_model.Ridge(alpha=0.5)
 
-c=sorted(plotter3.iteritems(),key=lambda (x,y): float(x))
-key1=[]
-val1=[]
+c = sorted(plotter3.iteritems(), key=lambda (x, y): float(x))
+key1 = []
+val1 = []
 for j in c:
     key1.append(j[0])
     val1.append(j[1])
@@ -104,13 +104,13 @@ plt.xlabel('Atomic Fraction')
 plt.ylabel('Band Gap')
 plt.show()
 
-d=sorted(plotter2.iteritems(),key=lambda (x,y):float(x))
-key2=[]
-val2=[]
+d = sorted(plotter2.iteritems(), key=lambda (x, y): float(x))
+key2 = []
+val2 = []
 for k in d:
     key2.append(k[0])
     val2.append(k[1])
-plt.plot(val2,key2)
+plt.plot(val2, key2)
 plt.xlabel('Electro negativity difference')
 plt.ylabel('Band Gap')
 plt.show()

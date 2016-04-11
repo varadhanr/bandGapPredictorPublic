@@ -178,4 +178,5 @@ clf.fit(train_X, train_Y)
 predict = clf.predict(test_X)
 print ("Accuracy using svm.LinearSVC() is : " +
        str(accuracy_score(test_Y, predict) * 100) + "%")
-print ("Number of correct predictions:"+str(accuracy_score(test_Y,predict,normalize=False)))
+print ("Number of correct predictions:" +
+       str(accuracy_score(test_Y, predict, normalize=False)))
