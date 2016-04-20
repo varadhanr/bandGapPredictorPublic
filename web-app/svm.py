@@ -210,4 +210,7 @@ test_X = physicalFeatures1
 clf = RandomForestClassifier(n_estimators=50)
 clf.fit(train_X, train_Y)
 predict = clf.predict(test_X)
-print (predict)
+#print predict
+#print type(predict)
+predicted_bandgap=bucket.bucket_to_bandgap_conversion(predict[0])
+print("The Predicted BandGap for the given binary compound is "+str(predicted_bandgap))

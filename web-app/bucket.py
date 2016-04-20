@@ -14,3 +14,10 @@ def create_bucket(a):
                 new_bucket.append(j[1])
                 break
     return new_bucket
+
+def bucket_to_bandgap_conversion(b):
+#    print(b)
+    for key,value in bucket_list.iteritems():
+        if(value==b):
+             return key
+        

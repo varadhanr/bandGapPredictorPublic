@@ -25,7 +25,7 @@ for line in trainFile:
     split = str.split(line, ',')
     if(float(split[1]) == 0):
         x = 1
-#        continue
+        continue
     material = Composition(split[0])
     materials.append(material)
     naiveFeatures.append(naiveVectorize(material))
@@ -166,8 +166,8 @@ print("The MAE of random forrest using physicalFeatures feature set is: " +
       str(round(abs(mean(scores)), 3)) + " eV")
 
 
-# Using RandomForest to classify
-# training set size:4096
+# Using SVM to classify
+# training set size:3000 test set size:1096
 
 from sklearn.ensemble import RandomForestClassifier
 import sys
@@ -203,11 +203,14 @@ for i in binary_compounds:
     theseFeatures1.append(group1[1])
     theseFeatures1.append(atomicNo1[0] + atomicNo1[1])
     physicalFeatures1.append(theseFeatures1)
-train_X = physicalFeatures[0:4096]
+train_X = physicalFeatures[0:3000]
 convertedBandgap = bucket.create_bucket(bandgaps)
-train_Y = convertedBandgap[0:4096]
+train_Y = convertedBandgap[0:3000]
 test_X = physicalFeatures1
 clf = RandomForestClassifier(n_estimators=50)
 clf.fit(train_X, train_Y)
 predict = clf.predict(test_X)
-print (predict)
+#print predict
+#print type(predict)
+predicted_bandgap=bucket.bucket_to_bandgap_conversion(predict[0])
+print("The Predicted BandGap for the given binary compound is "+str(predicted_bandgap))
